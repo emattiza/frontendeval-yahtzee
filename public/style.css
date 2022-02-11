@@ -5,3 +5,34 @@
 body {
   box-sizing: border-box;
 }
+
+.container {
+  @apply min-h-screen p-12
+}
+
+.dice-form {
+  @apply form-control col-start-1 grid-cols-3
+}
+
+.dice-label {
+  @apply label
+}
+.dice-label-text {
+  @apply label-text
+}
+
+.dice-input {
+  @apply input input-bordered
+}
+
+.roll-dice-btn {
+  @apply btn btn-group
+}
+
+.display-dice-container {
+  @apply grid grid-cols-3
+}
+
+.dice-svg {
+  @apply grid-cols-1 m-2
+}

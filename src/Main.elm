@@ -1,9 +1,10 @@
 module Main exposing (main)
 
 import Browser
-import Html exposing (Html, button, div, text)
-import Html.Events exposing (onClick)
-import Html.Attributes exposing (class)
+import Dice exposing (Dice(..), viewDice, viewDiceContainer)
+import Html exposing (Html, button, div, hr, input, label, span, text)
+import Html.Attributes exposing (class, placeholder, type_)
+import Html.Events exposing (onClick, onInput, onSubmit)
 
 
 type alias Model =
@@ -16,26 +17,48 @@ initialModel =
 
 
 type Msg
-    = Increment
-    | Decrement
+    = RollDice
+    | DiceCount String
 
 
 update : Msg -> Model -> Model
 update msg model =
     case msg of
-        Increment ->
+        RollDice ->
             { model | count = model.count + 1 }
 
-        Decrement ->
-            { model | count = model.count - 1 }
+        DiceCount ct ->
+            { model
+                | count =
+                    Maybe.withDefault 0 (String.toInt ct)
+            }
 
 
 view : Model -> Html Msg
 view model =
-    div [class "btn-group"]
-        [ button [ class "btn btn-lg", onClick Increment ] [ text "+1" ]
-        , div [] [ text <| String.fromInt model.count ]
-        , button [ class "btn btn-lg", onClick Decrement ] [ text "-1" ]
+    div [ class "container" ]
+        [ viewDiceNeededForm
+        , viewDiceContainer [ One, Two, Three, Four, Five, Six ]
+        ]
+
+
+viewDiceNeededForm : Html Msg
+viewDiceNeededForm =
+    div [ class "dice-form" ]
+        [ label
+            [ class "dice-label" ]
+            [ span
+                [ class "dice-label-text" ]
+                [ text "How many dice?" ]
+            ]
+        , input
+            [ type_ "number"
+            , placeholder "0"
+            , onInput DiceCount
+            , class "dice-input"
+            ]
+            []
+        , button [ class "roll-dice-btn", onClick RollDice ] [ text "Roll" ]
         ]
 
 
