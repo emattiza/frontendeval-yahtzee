@@ -7,7 +7,7 @@ body {
 }
 
 .container {
-  @apply min-h-screen p-12
+  @apply min-h-screen p-12 max-w-lg mx-auto
 }
 
 .dice-form {
