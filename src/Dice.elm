@@ -1,6 +1,6 @@
 module Dice exposing (..)
 
-import Html exposing (Html, div)
+import Html exposing (Html, div, span, text)
 import Html.Attributes as HAttrs exposing (class)
 import Svg exposing (Svg, circle, g, rect, svg)
 import Svg.Attributes as SAttrs exposing (height, viewBox, width, x, y)
@@ -17,11 +17,17 @@ type Dice
 
 viewDiceContainer : List Dice -> Html msg
 viewDiceContainer diceList =
-    case diceList of
-        _ ->
-            div
-                [ class "display-dice-container" ]
-                (List.map viewDice diceList)
+    let
+        total : String
+        total =
+            diceList |> List.map toInt |> List.sum |> String.fromInt
+    in
+    div
+        [ class "display-dice-container" ]
+        (List.append
+            [ span [ HAttrs.class "dice-total-display" ] [ text total ] ]
+            (List.map viewDice diceList)
+        )
 
 
 viewDice : Dice -> Svg msg
@@ -72,9 +78,11 @@ viewDots dice =
         topLeftDot : Svg msg
         topLeftDot =
             dot "20" "20"
+
         centerLeftDot : Svg msg
         centerLeftDot =
             dot "20" "50"
+
         centerRightDot : Svg msg
         centerRightDot =
             dot "80" "50"
@@ -118,6 +126,7 @@ viewDots dice =
                 , topLeftDot
                 , centerDot
                 ]
+
         Six ->
             g
                 []

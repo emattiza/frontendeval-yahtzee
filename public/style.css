@@ -34,5 +34,9 @@ body {
 }
 
 .dice-svg {
-  @apply grid-cols-1 m-2
+  @apply m-2 col-span-1
+}
+
+.dice-total-display {
+  @apply m-2 col-span-3 text-center
 }
